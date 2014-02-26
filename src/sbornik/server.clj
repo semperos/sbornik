@@ -1,17 +1,24 @@
 (ns sbornik.server
-  (:require [org.httpkit.server :refer [run-server]]
+  (:require [clojure.java.io :as io]
+            [org.httpkit.server :refer [run-server]]
             [sbornik.views :as v]
-            [compojure.core :refer [defroute GET]]
+            [ring.middleware.reload :refer [wrap-reload]]
+            [compojure.core :refer [defroutes GET]]
             [compojure.route :as route]
-            [compojure.handler :refer [site]])
+            [compojure.handler :refer [site]]
+            [sbornik.config :refer [*env*]])
   (:gen-class))
 
 (defroutes app-routes
-  (GET "/" (v/layout "Sbornik" :english "hello HTTP!"))
+  (GET "/" [] (v/layout "Sbornik" :english "hello HTTP!"))
+  (GET "/bible/:language/:edition/:chapter" [language edition chapter]
+    (v/show-bible-chapter language edition chapter))
   (route/resources "/")
   (route/not-found (slurp (io/resource "404.html"))))
 
-(def app ())
+(def app (if (= *env* :development)
+           (wrap-reload (site #'app-routes))
+           (site app-routes)))
 
 (defonce server (atom nil))
 
