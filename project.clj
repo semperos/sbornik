@@ -1,6 +1,6 @@
 (defproject sbornik "0.1.0-SNAPSHOT"
   :description "Sbornik Web Application"
-  :url "https://github.com/semperos/sbornik"
+ :url "https://github.com/semperos/sbornik"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
@@ -30,7 +30,11 @@
                                   [om "0.5.0"]
                                   [com.facebook/react "0.9.0"]
                                   [sablono "0.2.6"]
-                                  [secretary "1.0.0"]]}}
+                                  [secretary "1.0.0"]]}
+             :test {:dependencies [[ring-mock "0.1.5"]]}}
+  :test-selectors {:default (complement :integration)
+                   :integration :integration
+                   :all (constantly true)}
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src-cljs"]
                         :compiler {:output-to "target/client/resources/public/app/js/app-dev.js"
