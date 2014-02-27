@@ -2,8 +2,9 @@
   (:require [clojure.java.io :as io]
             [org.httpkit.server :refer [run-server]]
             [sbornik.views :as v]
+            [sbornik.api :as api]
             [ring.middleware.reload :refer [wrap-reload]]
-            [compojure.core :refer [defroutes GET]]
+            [compojure.core :refer [defroutes GET ANY]]
             [compojure.route :as route]
             [compojure.handler :refer [site]]
             [sbornik.config :refer [*env*]])
@@ -11,8 +12,9 @@
 
 (defroutes app-routes
   (GET "/" [] (v/layout "Sbornik" :english "hello HTTP!"))
-  (GET "/bible/:language/:edition/:chapter" [language edition chapter]
-    (v/show-bible-chapter language edition chapter))
+  (ANY "/bible/:language/:edition/:book"
+      {params :params}
+    (api/bible-text params))
   (route/resources "/")
   (route/not-found (slurp (io/resource "404.html"))))
 

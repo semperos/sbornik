@@ -56,10 +56,32 @@
             (filter identity)
             (str/join "\n" )))))
 
+(defn to-number
+  [x]
+  (if (or (number? x)
+          (= x :end))
+    x
+    (try
+      (Integer/parseInt x)
+      (catch NumberFormatException e
+        nil))))
+
 (defresource bible-text
-  [{:keys [lang edition book chapter verse] :as params}]
+  [{:keys [lang edition book start-chapter start-verse end-chapter end-verse]
+    :or {start-chapter 1
+         start-verse 1
+         end-chapter :end
+         end-verse :end}
+    :as params}]
   :available-media-types ["application/edn"]
-  :exists? #(when-let [excerpt (bible-excerpt params)]
-              {::entry excerpt})
+  :allowed-methods [:get]
+  :exists? (fn [ctx]
+             (when-let [excerpt (-> params
+                                    (merge {:start [(to-number start-chapter)
+                                                    (to-number start-verse)]
+                                            :end [(to-number end-chapter)
+                                                  (to-number end-verse)]})
+                                    bible-excerpt)]
+               {::entry {:bible-text excerpt}}))
   :handle-not-found (constantly {:error "Bible text not found."})
-  :handle-ok (fn [c] {::entry (bible-excerpt params)}))
+  :handle-ok (fn [ctx] (::entry ctx)))
