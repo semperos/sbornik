@@ -13,7 +13,6 @@
 (defroutes app-routes
   (GET "/" [] (v/layout "Sbornik" :english))
   (ANY "/metadata" _ (api/metadata))
-  (ANY "/bible/:lang/:edition/books" {params :params} (api/bible-books params))
   (ANY "/bible/:lang/:edition/books/:book" {params :params} (api/bible-text params))
   (route/resources "/")
   (route/not-found (slurp (io/resource "404.html"))))
