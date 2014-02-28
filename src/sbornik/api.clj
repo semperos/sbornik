@@ -65,12 +65,14 @@
      :or {lang "en"
           start [1 1]
           end [:end :end]}}]
-     (when-let [book-resource (io/resource (str "ponomar/Ponomar/languages/"
-                                                lang "/bible/"
-                                                edition "/" book ".text"))]
-       (->> (bible-lines book-resource start end)
-            (filter identity)
-            (str/join "\n" )))))
+     (when-let [books (get-in (config/metadata) (mapv keyword [lang :bible edition :books]))]
+       (let [book-resource (->> books
+                                (filter #(= (:name %) book))
+                                :file
+                                io/resource)]
+         (->> (bible-lines book-resource start end)
+              (filter identity)
+              (str/join "\n" ))))))
 
 (defresource bible-text
   [{:keys [lang edition book start-chapter start-verse end-chapter end-verse]
@@ -89,20 +91,6 @@
                                                   (to-number end-verse)]})
                                     bible-excerpt)]
                {::entry {:bible-text excerpt}}))
-  :handle-not-found (default-not-found)
-  :handle-ok #(::entry %))
-
-(defn bible-books*
-  [lang edition]
-  (println "Get inside:" (mapv keyword [lang :bible edition :books]))
-  (get-in (config/metadata) (mapv keyword [lang :bible edition :books])))
-
-(defresource bible-books
-  [{:keys [lang edition]}]
-  :available-media-types ["application/edn"]
-  :allowed-methods [:get]
-  :exists? (fn [ctx]
-             {::entry (bible-books* lang edition)})
   :handle-not-found (default-not-found)
   :handle-ok #(::entry %))
 

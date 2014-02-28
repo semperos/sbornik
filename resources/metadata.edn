@@ -1,53 +1,82 @@
-{
+{:version "0.0.1"
  :en
  {:bible
   {:brenton
-   {:books ["Amos"
-            "Baruch"
-            "Dan"
-            "Deut"
-            "Eccles"
-            "Esther"
-            "Ex"
-            "Ezek"
-            "Gen"
-            "Habak"
-            "Hagg"
-            "Hos"
-            "III_Kings"
-            "III_Macc"
-            "II_Esdra"
-            "II_Kings"
-            "II_Macc"
-            "II_Paral"
-            "IV_Kings"
-            "IV_Macc"
-            "I_Esdra"
-            "I_Kings"
-            "I_Macc"
-            "I_Paral"
-            "Isa"
-            "Jerem"
-            "Job"
-            "Joel"
-            "Jona"
-            "Josh"
-            "Judg"
-            "Judith"
-            "Lamen"
-            "Lev"
-            "Mal"
-            "Mica"
-            "Nahum"
-            "Nehem"
-            "Num"
-            "Obad"
-            "Prov"
-            "Psalm"
-            "Ruth"
-            "Sirach"
-            "Song"
-            "Tobit"
-            "Wisd"
-            "Zech"
-            "Zeph"]}}}}
+   {:books [{:name "Genesis"             :file "Gen.text"}
+            {:name "Exodus"              :file "Ex.text"}
+            {:name "Leviticus"           :file "Lev.text"}
+            {:name "Numbers"             :file "Num.text"}
+            {:name "Deuteronomy"         :file "Deut.text"}
+            {:name "Joshua"              :file "Josh.text"}
+            {:name "Judges"              :file "Judg.text"}
+            {:name "Ruth"                :file "Ruth.text"}
+            {:name "I Kings"             :file "I_Kings.text" :alternate-name "I Samuel"}
+            {:name "II Kings"            :file "II_Kings.text" :alternate-name "II Samuel"}
+            {:name "III Kings"           :file "III_Kings.text" :alternate-name "I Kings"}
+            {:name "IV Kings"            :file "IV_Kings.text" :alternate-name "II Kings"}
+            {:name "I Paralipomenon"     :file "I_Paral.text" :alternate-name "I Chronicles"}
+            {:name "II Paralipomenon"    :file "II_Paral.text" :alternate-name "II Chronicles"}
+            {:name "I Edras"             :file "I_Esdra.text"}
+            {:name "II Edras"            :file "II_Esdra.text" :alternate-name "Ezra-Nehemiah"}
+            {:name "Tobit"               :file "Tobit.text"}
+            {:name "Judith"              :file "Judith.text"}
+            {:name "Esther"              :file "Esther.text"}
+            {:name "I Maccabees"         :file "I_Macc.text"}
+            {:name "II Maccabees"        :file "II_Macc.text"}
+            {:name "III Maccabees"       :file "III_Macc.text"}
+            {:name "Psalms"              :file "Psalm.text" :alternate-file "psalter.txt"}
+            {:name "Prayer of Manasseh"}
+            {:name "Job"                 :file "Job"}
+            {:name "Proverbs"            :file "Prov"}
+            {:name "Ecclesiastes"        :file "Eccles"}
+            {:name "Song of Songs"       :file "Song" :alternate-name "Song of Solomon"}
+            {:name "Wisdom of Solomon"   :file "Wisd" :alternate-name "Wisdom"}
+            {:name "Sirach"              :file "Sirach" :alternate-name "Ecclesiasticus"}
+            {:name "Psalms of Solomon"}
+            {:name "Hosea"               :file "Hos"}
+            {:name "Amos"                :file "Amos"}
+            {:name "Micah"               :file "Mica"}
+            {:name "Joel"                :file "Joel"}
+            {:name "Obadiah"             :file "Obad"}
+            {:name "Jonah"               :file "Jona" :alternate-name "Jonas"}
+            {:name "Nahum"               :file "Nahum"}
+            {:name "Habakkuk"            :file "Habak" :alternate-name "Avvakum"}
+            {:name "Zephaniah"           :file "Zeph" :alternate-name "Sophonias"}
+            {:name "Haggai"              :file "Hagg"}
+            {:name "Zachariah"           :file "Zech" :alternate-name "Zacharias"}
+            {:name "Malachi"             :file "Mal" :alternate-name "Messenger"}
+            {:name "Isaiah"              :file "Isa" :alternate-name "Esaias"}
+            {:name "Jeremiah"            :file "Jerem" :alternate-name "Jeremias"}
+            {:name "Baruch"              :file "Baruch"}
+            {:name "Lamentations"        :file "Lamen"}
+            {:name "Epistle of Jeremiah" :file "Jerem"}
+            {:name "Daniel"              :file "Dan"}
+            {:name "IV Maccabees"        :file "IV_Macc"}]}
+   :kjv
+   {:books [{:name "Matthew"             :file "Mt.text"}
+            {:name "Mark"                :file "Mk.text"}
+            {:name "Luke"                :file "Lk.text"}
+            {:name "John"                :file "Jn.text"}
+            {:name "Acts"                :file "Acts.text"}
+            {:name "Romans"              :file "Rom.text"}
+            {:name "I Corinthians"       :file "I_Cor.text"}
+            {:name "II Corinthians"      :file "II_Cor.text"}
+            {:name "Galatians"           :file "Gal.text"}
+            {:name "Ephesians"           :file "Eph.text"}
+            {:name "Philippians"         :file "Philip.text"}
+            {:name "Colossians"          :file "Col.text"}
+            {:name "I Thessalonians"     :file "I_Thess.text"}
+            {:name "II Thessalonians"    :file "II_Thess.text"}
+            {:name "I Timomthy"          :file "I_Tim.text"}
+            {:name "II Timothy"          :file "II_Tim.text"}
+            {:name "Titus"               :file "Tit.text"}
+            {:name "Philemon"            :file "Philemon.text"}
+            {:name "Hebrews"             :file "Heb.text"}
+            {:name "James"               :file "Jas.text"}
+            {:name "I Peter"             :file "I_Pet.text"}
+            {:name "II Peter"            :file "II_Pet.text"}
+            {:name "I John"              :file "I_Jn.text"}
+            {:name "II John"             :file "II_Jn.text"}
+            {:name "III John"            :file "III_Jn.text"}
+            {:name "Jude"                :file "Jude.text"}
+            {:name "Apocalypse"          :file "Apoc.text" :alternate-name "Revelation"}]}}}}

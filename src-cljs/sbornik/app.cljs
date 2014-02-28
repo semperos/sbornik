@@ -34,6 +34,20 @@
   [id]
   (.getElementById js/document id))
 
+;;=========
+;; DOM Work
+
+(defn list-bible-books
+  "Bible books may be nil."
+  [bible-books]
+  (if bible-books
+    [:ul
+     (for [{:keys [name alternate-name] :as book} bible-books]
+       [:li name
+        (when alternate-name
+          [:span " (" alternate-name ")"])])]
+    [:h4.text-muted "Fetching..."]))
+
 ;;===========
 ;; Components
 
@@ -54,11 +68,14 @@
          [:h1 "Orthodox Sbornik"]
          (case (:showing app)
            :home [:div
-                  [:h2 "Home"]
-                  (when-let [bible-books (get-in app [:metadata :en :bible :brenton :books])]
-                    [:ul
-                     (for [book bible-books]
-                       [:li book])])])]))))
+                  [:h2 "Bible"]
+                  [:div.row
+                   [:div.col-xs-6
+                    [:h3 "Septuagent"]
+                    (list-bible-books (get-in app [:metadata :en :bible :brenton :books]))]
+                   [:div.col-xs-6
+                    [:h3 "New Testament"]
+                    (list-bible-books (get-in app [:metadata :en :bible :kjv :books]))]]])]))))
 
 (defn main []
   (om/root main-component page-state {:target (by-id "sbornik-app")}))
