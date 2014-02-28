@@ -44,3 +44,8 @@
                                 :end [2 3]})]
     (is (re-find #"The words of Amos which came" excerpt))
     (is (re-find #"And I  will destroy the judge out of her" excerpt))))
+
+(deftest test-bible-books
+  (let [books (bible-books* "en" "brenton")]
+    (is (> (count books) 10))
+    (is (every? seq books))))

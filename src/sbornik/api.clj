@@ -1,13 +1,29 @@
 (ns sbornik.api
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
-            [liberator.core :refer [resource defresource]]))
+            [liberator.core :refer [resource defresource]]
+            [sbornik.config :as config]))
 
-;; TODO
-;;
-;;  * Add resources for all the things Ponomar has
-;;  * See what it'll take to use the Java files included in the Ponomar lib,
-;;    consider just making a legit JAR as part of the process
+;;==========
+;; Utilities
+
+(defn to-number
+  [x]
+  (if (or (number? x)
+          (= x :end))
+    x
+    (try
+      (Integer/parseInt x)
+      (catch NumberFormatException e
+        nil))))
+
+(defn default-not-found
+  []
+  (fn [ctx] {:status :not-found}))
+
+;;===============
+;; Implementation
+
 (defn chap-not-match
   [chap]
   (fn [line]
@@ -56,16 +72,6 @@
             (filter identity)
             (str/join "\n" )))))
 
-(defn to-number
-  [x]
-  (if (or (number? x)
-          (= x :end))
-    x
-    (try
-      (Integer/parseInt x)
-      (catch NumberFormatException e
-        nil))))
-
 (defresource bible-text
   [{:keys [lang edition book start-chapter start-verse end-chapter end-verse]
     :or {start-chapter 1
@@ -83,5 +89,26 @@
                                                   (to-number end-verse)]})
                                     bible-excerpt)]
                {::entry {:bible-text excerpt}}))
-  :handle-not-found (constantly {:error "Bible text not found."})
-  :handle-ok (fn [ctx] (::entry ctx)))
+  :handle-not-found (default-not-found)
+  :handle-ok #(::entry %))
+
+(defn bible-books*
+  [lang edition]
+  (println "Get inside:" (mapv keyword [lang :bible edition :books]))
+  (get-in (config/metadata) (mapv keyword [lang :bible edition :books])))
+
+(defresource bible-books
+  [{:keys [lang edition]}]
+  :available-media-types ["application/edn"]
+  :allowed-methods [:get]
+  :exists? (fn [ctx]
+             {::entry (bible-books* lang edition)})
+  :handle-not-found (default-not-found)
+  :handle-ok #(::entry %))
+
+(defresource metadata []
+  :available-media-types ["application/edn"]
+  :allowed-methods [:get]
+  :exists? (fn [ctx] {::entry (config/metadata)})
+  :handle-not-found (default-not-found)
+  :handle-ok #(::entry %))

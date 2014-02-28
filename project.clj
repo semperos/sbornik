@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/tools.reader "0.8.3"]
                  [org.clojure/tools.logging "0.2.6"]
+                 [org.clojure/core.memoize "0.5.6"]
                  [http-kit "2.1.17" :exclusions [org.clojure/clojure]]
                  [compojure "1.1.6" :exclusions [org.clojure/clojure
                                                  org.clojure/tools.reader]]
@@ -30,7 +31,8 @@
                                   [om "0.5.0"]
                                   [com.facebook/react "0.9.0"]
                                   [sablono "0.2.6"]
-                                  [secretary "1.0.0"]]}
+                                  [secretary "1.0.0"]
+                                  [cljs-http "0.1.8"]]}
              :test {:dependencies [[ring-mock "0.1.5"]]}}
   :test-selectors {:default (complement :integration)
                    :integration :integration
