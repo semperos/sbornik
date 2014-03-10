@@ -7,6 +7,7 @@
                  [org.clojure/tools.reader "0.8.3"]
                  [org.clojure/tools.logging "0.2.6"]
                  [org.clojure/core.memoize "0.5.6"]
+                 [org.clojure/core.async "0.1.278.0-76b25b-alpha"]
                  [http-kit "2.1.17" :exclusions [org.clojure/clojure]]
                  [compojure "1.1.6" :exclusions [org.clojure/clojure
                                                  org.clojure/tools.reader]]
@@ -17,7 +18,12 @@
                  [ring/ring-devel "1.2.1"]
                  ;; Needed for Ring 1.2.x
                  [javax.servlet/servlet-api "2.5"]
-                 [hiccup "1.0.5" :exclusions [org.clojure/clojure]]]
+                 [hiccup "1.0.5" :exclusions [org.clojure/clojure]]
+                 ;; [enliven "0.1.0-SNAPSHOT" :exclusions [org.clojure/clojure]]
+                 [enlive "1.1.5"]
+                 [clj-http "0.9.0" :exclusions [cheshire
+                                                org.clojure/tools.reader]]
+                 [clj-time "0.6.0" :exclusions [org.clojure]]]
   :aliases {"web-watch" ["with-profile" "+web" "cljsbuild" "auto" "dev"]
             "web-repl" ["with-profile" "+web" "trampoline" "cljsbuild" "repl-listen"]
             "web-test" ["with-profile" "+web" "cljsbuild" "auto" "test"]}
