@@ -32,3 +32,12 @@
         (is (> cnt 1))
         (is (< cnt 25)))
       (is (= (keys (edn/read-string (:body resp))) [:bible-text])))))
+
+(deftest ^:integration test-hours-endpoint
+  (testing "no query parameters"
+    (let [resp (app (request :get "/hours"))]
+      (succeeds? resp)
+      (is (every? (partial contains? (:body resp)) [:first :second :third
+                                                    :fourth :fifth :sixth
+                                                    :seventh :eigth :ninth
+                                                    :tenth :eleventh :twelfth])))))

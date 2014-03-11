@@ -14,6 +14,7 @@
   (GET "/" [] (v/layout "Sbornik" :english))
   (ANY "/metadata" _ (api/metadata))
   (ANY "/bible/:lang/:edition/books/:book" {params :params} (api/bible-text params))
+  (ANY "/hours" {params :params} (api/hours params))
   (route/resources "/")
   (route/not-found (slurp (io/resource "404.html"))))
 
